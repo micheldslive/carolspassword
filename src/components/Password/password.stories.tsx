@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react"
 import { Password } from "."
-import { userDataStore } from "../../contexts"
+import { userDataStore } from "@/contexts"
 
 interface PasswordProps {
   winner: boolean

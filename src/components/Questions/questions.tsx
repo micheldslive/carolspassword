@@ -1,223 +1,147 @@
-import { TextParagraph } from "./styles"
+import { useEffect, useState } from "react"
+import { FieldValues, FormProvider, useForm } from "react-hook-form"
+import { yupResolver } from "@hookform/resolvers/yup"
+import { ScrollBox } from "./ScrollBox"
+import { questions } from "./questionsAnswers"
+import {
+  BoxValueQuestion,
+  Container,
+  ContentQuestion,
+  Header,
+  KeyBox,
+  NumberQuestion,
+  Text,
+  Title,
+  ValueQuestion,
+} from "./styles"
+import { Button, Input } from "@/components"
+import { schema } from "./validations"
+import { ModalReturnQuestion } from "./ModalReturnQuestion"
+import { useNavigate } from "react-router-dom"
+import { useDataStates } from "@/contexts"
 
-export const questions = [
-  {
-    id: 1,
-    password: 27,
-    points: 25,
-    text: (
-      <>
-        <TextParagraph>
-          Sou um objeto presente no quarto,
-          <br />
-          Sempre exposto, nunca em um recanto,
-          <br />
-          Guardo um número, pode estar certa,
-          <br />
-          Que representa um momento encantador.
-          <br />
-        </TextParagraph>
-        <br />
+export type FieldValuesWithoutPassword = Omit<FieldValues, "password">
 
-        <TextParagraph>
-          Não me subestime pelo meu tamanho,
-          <br />
-          Pois sou muito mais do que parece,
-          <br />
-          E dentro de mim esconde-se uma pista,
-          <br />
-          De uma data que seu coração conhece.
-          <br />
-        </TextParagraph>
-        <br />
+export function Questions() {
+  const [openModal, setOpenModal] = useState(false)
+  const [wrongQuestion, setWrongQuestion] = useState(false)
+  const { score, numberQuestion, winner, handleData } = useDataStates()
+  const navigate = useNavigate()
 
-        <TextParagraph>
-          Essa data representa um grande amor,
-          <br />
-          E em seu céu brilha uma constelação,
-          <br />
-          Que é um símbolo dessa união,
-          <br />
-          E que irá levá-la ao meu tesouro, sem erro.
-          <br />
-        </TextParagraph>
-        <br />
+  const methods = useForm<FieldValuesWithoutPassword>({
+    resolver: yupResolver(schema),
+  })
 
-        <TextParagraph>
-          Decifre o que estou querendo te dizer,
-          <br />
-          E em minhas bordas irá encontrar,
-          <br />
-          Um número que a próxima etapa,
-          <br />
-          Estás prestes a desbloquear.
-          <br />
-        </TextParagraph>
-      </>
-    ),
-  },
+  const { handleSubmit, reset } = methods
 
-  {
-    id: 2,
-    password: 12,
-    points: 25,
-    text: (
-      <>
-        <TextParagraph>
-          "Eu sou um mistério a ser desvendado,
-          <br />
-          Uma resposta que você precisa encontrar.
-          <br />
-          Os números estão à sua disposição,
-          <br />
-          Mas onde você deve procurar?
-          <br />
-        </TextParagraph>
-        <br />
+  function closeModal() {
+    setOpenModal(false)
 
-        <TextParagraph>
-          Olhe para o horário com atenção,
-          <br />
-          Pois o que você procura está lá.
-          <br />
-          Procure os números escondidos,
-          <br />
-          na seção onde você define o despertar.
-          <br />
-        </TextParagraph>
-        <br />
+    if (winner) {
+      navigate("/dashboard")
+    }
+  }
 
-        <TextParagraph>
-          O número está lá, esperando por você,
-          <br />
-          Mas para encontrá-lo, você deve decifrar o enigma.
-          <br />
-          Que lugar é esse onde os números se escondem?
-          <br />
-          A dica, é que esse objeto brilha."
-          <br />
-        </TextParagraph>
-      </>
-    ),
-  },
+  const dataQuestion = questions?.map((question) => {
+    const data = {
+      id: question.id,
+      password: question.password,
+      points: question.points,
+      text: question.text,
+    }
+    return data
+  })
 
-  {
-    id: 3,
-    password: 19,
-    points: 25,
-    text: (
-      <>
-        <TextParagraph>
-          "Sou a resposta que procuras,
-          <br />
-          Um mistério escondido em algum lugar.
-          <br />
-          Mas cuidado onde colocaste tuas mãos,
-          <br />
-          Pois neste lugar não te atreves a tocar.
-          <br />
-        </TextParagraph>
-        <br />
+  async function finalGame() {
+    handleData({
+      winner: true,
+      winnerModal: true,
+      bonusModal: true,
+    })
+  }
 
-        <TextParagraph>
-          Frequentamos este lugar por alguns dias,
-          <br />
-          E pedias para que eu ligasse um equipamento,
-          <br />
-          Com medo de se machucar ao colocar as mãos,
-          <br />
-          E falava da temperatura a todo momento.
-          <br />
-        </TextParagraph>
-        <br />
+  async function isWinner() {
+    if (score === 100 && numberQuestion === 4) {
+      handleData({ winner: true })
+      finalGame()
+    }
+  }
 
-        <TextParagraph>
-          O número que procuras, lá está,
-          <br />
-          Qual é esse lugar que esconde a resposta,
-          <br />
-          Para o próximo desafio desbloquear?
-          <br />
-        </TextParagraph>
-      </>
-    ),
-  },
+  useEffect(() => {
+    isWinner()
+  }, [score])
 
-  {
-    id: 4,
-    password: 29,
-    points: 25,
-    text: (
-      <>
-        <TextParagraph>
-          "Parabéns, você chegou até aqui,
-          <br />
-          Mas ainda há um desafio a superar,
-          <br />
-          Para encontrar o presente que é seu por direito,
-          <br />
-          E que está escondido em um baú para desbloquear.
-          <br />
-        </TextParagraph>
-        <br />
+  async function sendQuestion(formData: FieldValuesWithoutPassword) {
+    try {
+      const passwordQuestion = formData?.password
 
-        <TextParagraph>
-          O código do cadeado é o que precisa,
-          <br />
-          Mas um número ainda falta e precisa encontrar,
-          <br />
-          Ele está escondido,
-          <br />
-          Mas será mais fácil de achar.
-          <br />
-        </TextParagraph>
-        <br />
+      if (!passwordQuestion) {
+        return
+      }
 
-        <TextParagraph>
-          Onde está este lugar? Um enigma lhe darei,
-          <br />
-          Olhe bem e com atenção, pois logo uma frase citarei,
-          <br />
-          Este objeto costuma pular bastante,
-          <br />
-          Você precisará de uma chave para abrir, com certeza,
-          <br />
-          Às vezes, nesse objeto você parece um pica-pau,
-          <br />
-          A todo instante batendo na minha cabeça.
-          <br />
-        </TextParagraph>
-        <br />
+      if (dataQuestion[Number(numberQuestion)]?.password === passwordQuestion) {
+        setWrongQuestion(false)
+        handleData({
+          numberQuestion: Number(numberQuestion) + 1,
+          score: Number(score) + dataQuestion[Number(numberQuestion)]?.points,
+          winner: !!(score === 100 && numberQuestion === 4),
+        })
 
-        <TextParagraph>
-          Mas o mais interessante, vem a seguir,
-          <br />
-          Um dia esse objeto novamente pulou,
-          <br />
-          Naquele momento, você disse até para eu parar de rir,
-          <br />
-          Pois eu literalmente não aguentei quando você disse:
-          <br />
-          "Meu Deus amor, eu tô pulando aqui".
-          <br />
-        </TextParagraph>
-        <br />
+        setOpenModal(true)
 
-        <TextParagraph>
-          Se resolveres este enigma, o último número encontrarás
-          <br />
-          E o baú que contém o presente finalmente abrirás
-          <br />
-        </TextParagraph>
-        <br />
+        reset()
+        return
+      }
 
-        <TextParagraph>
-          Agora vá em frente, encontre o número que falta
-          <br />E abra o baú do presente, que te aguarda com alegria e, uma
-          pitada de nostalgia"
-        </TextParagraph>
-        <br />
-      </>
-    ),
-  },
-]
+      setOpenModal(true)
+      setWrongQuestion(true)
+      reset()
+      return
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  return (
+    <Container aria-label="questions">
+      <Header>
+        <ContentQuestion>
+          <Title>Question</Title>
+          <NumberQuestion>
+            {dataQuestion[Number(numberQuestion)]?.id}
+          </NumberQuestion>
+        </ContentQuestion>
+        <BoxValueQuestion>
+          <ValueQuestion>25</ValueQuestion>
+          <Text>pts</Text>
+        </BoxValueQuestion>
+      </Header>
+      <ScrollBox text={dataQuestion[Number(numberQuestion)]?.text} />
+
+      <FormProvider {...methods}>
+        <KeyBox onSubmit={handleSubmit(sendQuestion)}>
+          <Input
+            name="password"
+            error=""
+            label="Insert the code here"
+            placeholder="********"
+            type="password"
+          />
+          <Button
+            variant={0}
+            type="submit"
+            arrow
+            disabled={numberQuestion === 4}
+          />
+        </KeyBox>
+      </FormProvider>
+
+      <ModalReturnQuestion
+        open={openModal}
+        onClose={() => closeModal()}
+        icon={!wrongQuestion ? "ok" : "wrong"}
+        finishQuestions={numberQuestion === 4}
+      />
+    </Container>
+  )
+}

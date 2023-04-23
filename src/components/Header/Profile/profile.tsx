@@ -1,4 +1,4 @@
-import { Avatar } from ".."
+import { Avatar } from "../Avatar"
 import { useDataStates } from "@/contexts"
 import { AvatarAnimation, Button, Modal } from "@/components"
 import {
@@ -14,7 +14,7 @@ import {
   Text,
 } from "./styles"
 
-type ProfileProps = {
+export type ProfileProps = {
   open: boolean
   onClose: () => void
 }

@@ -2,7 +2,7 @@ import { BsCheck2Circle, BsEmojiFrown } from "react-icons/bs"
 import { Button, Modal } from "@/components"
 import { Container, Icon, Text } from "./styles"
 
-type ModalReturnQuestionProps = {
+export type ModalReturnQuestionProps = {
   open: boolean
   onClose: () => void
   icon: "ok" | "wrong"

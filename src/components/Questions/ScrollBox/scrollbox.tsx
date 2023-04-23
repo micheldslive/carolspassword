@@ -1,13 +1,13 @@
 import { ReactNode } from "react"
 import { Corner, Root, Scrollbar, Thumb, Viewport } from "./styles"
 
-type ScrollBoxProps = {
+export type ScrollBoxProps = {
   text: ReactNode
 }
 
 export function ScrollBox({ text }: ScrollBoxProps) {
   return (
-    <Root>
+    <Root aria-label="scrollbox">
       <Viewport>{text}</Viewport>
 
       <Scrollbar orientation="horizontal">
