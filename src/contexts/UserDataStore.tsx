@@ -16,7 +16,7 @@ interface IScoreStore extends IUserProps {
   handleData(newData: IUserProps): void
 }
 
-const userDataStore = createStore<IScoreStore>()(
+export const userDataStore = createStore<IScoreStore>()(
   persist(
     (set) => ({
       score: 0,

@@ -3,7 +3,7 @@ import LoadingIcon from "@/assets/images/loading.svg"
 
 export function Loading() {
   return (
-    <Container>
+    <Container aria-label="loading">
       <Content>
         <IconLoading src={LoadingIcon} />
         <Text>Loading</Text>

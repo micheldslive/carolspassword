@@ -4,7 +4,7 @@ import Loading from "@/assets/images/loading.svg"
 
 export function Load() {
   return (
-    <Container>
+    <Container aria-label="load">
       <AvatarAnimation variantAnimation="jumpRun" />
       <Content>
         <Logo subTitle="Password" size={18} />

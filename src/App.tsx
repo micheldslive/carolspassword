@@ -1,6 +1,6 @@
 import { ThemeProvider } from "styled-components"
 import { theme } from "./styles/theme"
-import { GlobalStyle } from "./styles/global"
+import { GlobalStyles } from "./styles/global"
 import { Header, Load } from "./components"
 import {
   Container,
@@ -37,7 +37,7 @@ export function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyle />
+      <GlobalStyles />
       <Container>
         <GlobalContainer>
           {loading ? (

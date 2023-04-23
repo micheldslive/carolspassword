@@ -1,13 +1,13 @@
 import { Container, InnerCircle, OuterCircle, Score, Text } from "./styles"
 
-type ScoreCircleProps = {
+export type ScoreCircleProps = {
   score?: number
   scale?: number
 }
 
 export function ScoreCircle({ score, scale }: ScoreCircleProps) {
   return (
-    <Container scale={scale}>
+    <Container scale={scale} aria-label="score">
       <OuterCircle>
         <InnerCircle>
           <Text>Score</Text>

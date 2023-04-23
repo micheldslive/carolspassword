@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { CircleButton, Icon } from "./styles"
-import { Profile } from "./Profile"
+import { Profile } from "../Profile"
 
 export function Avatar() {
   const [open, setOpen] = useState(false)
@@ -15,7 +15,7 @@ export function Avatar() {
 
   return (
     <>
-      <CircleButton onClick={() => openModal()}>
+      <CircleButton onClick={() => openModal()} aria-label="avatar">
         <Icon />
       </CircleButton>
       <Profile open={open} onClose={() => closeModal()} />

@@ -2,7 +2,7 @@ import { PropsWithChildren } from "react"
 import * as Dialog from "@radix-ui/react-dialog"
 import { ButtonClose, Content, Icon, Overlay } from "./styles"
 
-type ModalProps = {
+export type ModalProps = {
   open?: boolean
   onClose: () => void
   closeIcon?: boolean
