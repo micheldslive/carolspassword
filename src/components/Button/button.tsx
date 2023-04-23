@@ -7,7 +7,7 @@ import {
   BsPower,
 } from "react-icons/bs"
 
-interface ButtonProps extends ButtonHTMLAttributes<ButtonProps> {
+export interface ButtonProps extends ButtonHTMLAttributes<ButtonProps> {
   text?: string
   onClick?: () => void
   variant?: 0 | 1
@@ -23,7 +23,13 @@ export function Button({ text, onClick, variant, icon, arrow }: ButtonProps) {
   }
 
   return (
-    <ButtonAction onClick={onClick} variant={variant}>
+    <ButtonAction
+      onClick={onClick}
+      variant={variant}
+      aria-label={icon}
+      data-name={icon}
+      data-variant={variant}
+    >
       {variant === 1 && <Icon>{icon && iconButton[icon]}</Icon>}
       {text && text}
       {arrow && <BsArrowRight />}

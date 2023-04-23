@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { FieldValues, useForm } from "react-hook-form"
+import { FieldValues, FormProvider, useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { ScrollBox } from "./ScrollBox"
 import { questions } from "./questions"
@@ -20,7 +20,7 @@ import { ModalReturnQuestion } from "./ModalReturnQuestion"
 import { useNavigate } from "react-router-dom"
 import { useDataStates } from "@/contexts"
 
-type FieldValuesWithoutPassword = Omit<FieldValues, "password">
+export type FieldValuesWithoutPassword = Omit<FieldValues, "password">
 
 export function Questions() {
   const [openModal, setOpenModal] = useState(false)
@@ -28,9 +28,11 @@ export function Questions() {
   const { score, numberQuestion, winner, handleData } = useDataStates()
   const navigate = useNavigate()
 
-  const { control, handleSubmit, reset } = useForm<FieldValuesWithoutPassword>({
+  const methods = useForm<FieldValuesWithoutPassword>({
     resolver: yupResolver(schema),
   })
+
+  const { handleSubmit, reset } = methods
 
   function closeModal() {
     setOpenModal(false)
@@ -116,22 +118,23 @@ export function Questions() {
       </Header>
       <ScrollBox text={dataQuestion[Number(numberQuestion)]?.text} />
 
-      <KeyBox onSubmit={handleSubmit(sendQuestion)}>
-        <Input
-          name="password"
-          error=""
-          control={control}
-          label="Insert the code here"
-          placeholder="********"
-          type="password"
-        />
-        <Button
-          variant={0}
-          type="submit"
-          arrow
-          disabled={numberQuestion === 4}
-        />
-      </KeyBox>
+      <FormProvider {...methods}>
+        <KeyBox onSubmit={handleSubmit(sendQuestion)}>
+          <Input
+            name="password"
+            error=""
+            label="Insert the code here"
+            placeholder="********"
+            type="password"
+          />
+          <Button
+            variant={0}
+            type="submit"
+            arrow
+            disabled={numberQuestion === 4}
+          />
+        </KeyBox>
+      </FormProvider>
 
       <ModalReturnQuestion
         open={openModal}

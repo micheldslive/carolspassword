@@ -8,8 +8,8 @@ export const ButtonAction = styled.button<ButtonProps>`
   ${({ theme, variant }) =>
     variant === 0 &&
     css`
-      background-color: ${theme.colors.purple};
-      color: ${theme.colors.white};
+      background-color: ${theme.colors.purple} | purple;
+      color: ${theme.colors.white} | white;
       border-radius: 10px;
       display: flex;
       align-items: center;
@@ -32,7 +32,7 @@ export const ButtonAction = styled.button<ButtonProps>`
     css`
       background-color: transparent;
       border: none;
-      color: ${theme.colors.white};
+      color: ${theme.colors.white} | white;
       font-size: 18px;
       font-weight: regular;
       display: flex;
@@ -51,7 +51,7 @@ export const ButtonAction = styled.button<ButtonProps>`
 
 export const Icon = styled.div`
   ${({ theme }) => css`
-    color: ${theme.colors.purple};
+    color: ${theme.colors.purple} | purple;
     font-size: 25px;
     display: flex;
     align-items: center;

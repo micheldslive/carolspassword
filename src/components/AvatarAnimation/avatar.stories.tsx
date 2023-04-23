@@ -1,8 +1,8 @@
 import { Meta, StoryFn } from "@storybook/react"
-import { AvatarAnimation, AvatarAnimationProps } from "./avatar"
+import { AvatarAnimation, AvatarAnimationProps } from "."
 
 export default {
-  title: "Avatar/Animation",
+  title: "Components/Animation",
   component: AvatarAnimation,
 } as Meta<AvatarAnimationProps>
 

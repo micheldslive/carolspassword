@@ -9,6 +9,7 @@ import Walking from "@/assets/gif/walking.gif"
 export type AvatarAnimationProps = {
   variantAnimation: "dancing" | "dancingTwo" | "jump" | "jumpRun" | "walking"
 }
+
 export const animation = {
   dancing: Dancing,
   dancingTwo: DancingTwo,
@@ -18,5 +19,11 @@ export const animation = {
 }
 
 export function AvatarAnimation({ variantAnimation }: AvatarAnimationProps) {
-  return <Gif src={animation[variantAnimation]} aria-label='avatar' />
+  return (
+    <Gif
+      src={animation[variantAnimation]}
+      aria-label={variantAnimation}
+      data-name={variantAnimation}
+    />
+  )
 }
