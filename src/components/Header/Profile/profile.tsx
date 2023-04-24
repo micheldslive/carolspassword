@@ -1,4 +1,3 @@
-import { Avatar } from "../Avatar"
 import { useDataStates } from "@/contexts"
 import { AvatarAnimation, Button, Modal } from "@/components"
 import {
@@ -13,6 +12,8 @@ import {
   ScoreBox,
   Text,
 } from "./styles"
+import { useCallback } from "react"
+import { useNavigate } from "react-router-dom"
 
 export type ProfileProps = {
   open: boolean
@@ -20,14 +21,20 @@ export type ProfileProps = {
 }
 
 export function Profile({ open, onClose }: ProfileProps) {
-  const { score } = useDataStates()
+  const { score, resetData } = useDataStates()
+  const navigate = useNavigate()
+
+  const Logout = useCallback(() => {
+    resetData()
+    onClose()
+    navigate("/")
+  }, [])
 
   return (
     <Modal open={open} onClose={onClose} closeIcon>
       <Container>
         <ContentPerson>
           <PersonBox>
-            <Avatar />
             <DataPersonBox>
               <Name>Carol</Name>
               <Email>carol@gmail.com</Email>
@@ -48,7 +55,7 @@ export function Profile({ open, onClose }: ProfileProps) {
           variant={1}
           text="Logout"
           icon="power"
-          onClick={() => console.log("teste")}
+          onClick={Logout}
         />
       </Container>
     </Modal>

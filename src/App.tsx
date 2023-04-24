@@ -7,7 +7,7 @@ import {
   Content,
   GlobalContainer,
 } from "./components/ContainerGlobal/styles"
-import { MyRoutes } from "./routes"
+import { MainRoutes, MyRoutes } from "./routes"
 import { useEffect, useState } from "react"
 import { useDataStates } from "./contexts"
 
@@ -43,12 +43,12 @@ export function App() {
           {loading ? (
             <Load />
           ) : (
-            <div>
+            <MainRoutes>
               <Header />
               <Content>
                 <MyRoutes />
               </Content>
-            </div>
+            </MainRoutes>
           )}
         </GlobalContainer>
       </Container>

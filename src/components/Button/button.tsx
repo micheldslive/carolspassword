@@ -30,8 +30,8 @@ export function Button({ text, onClick, variant, icon, arrow }: ButtonProps) {
       data-name={icon}
       data-variant={variant}
     >
-      {variant === 1 && <Icon>{icon && iconButton[icon]}</Icon>}
-      {text && text}
+      {Boolean(variant) && <Icon>{icon && iconButton[icon]}</Icon>}
+      {text}
       {arrow && <BsArrowRight />}
     </ButtonAction>
   )
