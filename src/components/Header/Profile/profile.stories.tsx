@@ -1,6 +1,7 @@
 import { Meta, StoryFn } from "@storybook/react"
 import { Profile, ProfileProps } from "."
 import { useArgs } from "@storybook/client-api"
+import { withRouter } from "storybook-addon-react-router-v6"
 
 export default {
   title: "Components/Profile",
@@ -13,6 +14,12 @@ export default {
       table: {
         disable: true,
       },
+    },
+  },
+  decorators: [withRouter],
+  parameters: {
+    reactRouter: {
+      routePath: "/",
     },
   },
 } as Meta<typeof Profile>
