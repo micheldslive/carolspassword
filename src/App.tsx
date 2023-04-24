@@ -18,10 +18,7 @@ export function App() {
   const { pathname } = useLocation()
 
   async function getStart() {
-    if (
-      (pathname && pathname === "") ||
-      (pathname === "/" && initialLoading === true)
-    ) {
+    if (pathname === "/" && initialLoading === true) {
       setLoading(true)
     }
 
@@ -35,6 +32,10 @@ export function App() {
   useEffect(() => {
     getStart()
   }, [])
+
+  useEffect(() => {
+    console.log("loading", loading)
+  }, [loading])
 
   return (
     <ThemeProvider theme={theme}>
