@@ -17,25 +17,19 @@ export function App() {
   const { initialLoading } = useDataStates()
   const { pathname } = useLocation()
 
-  async function getStart() {
-    if (pathname === "/" && initialLoading === true) {
+  function getStart() {
+    if (pathname === "/" && initialLoading) {
       setLoading(true)
+    } else {
+      return
     }
 
-    const timer = setTimeout(async () => {
-      setLoading(false)
-    }, 5000)
-
-    return clearTimeout(timer)
+    setTimeout(() => setLoading(false), 5000)
   }
 
   useEffect(() => {
     getStart()
   }, [])
-
-  useEffect(() => {
-    console.log("loading", loading)
-  }, [loading])
 
   return (
     <ThemeProvider theme={theme}>
