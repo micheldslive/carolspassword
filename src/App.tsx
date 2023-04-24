@@ -7,14 +7,15 @@ import {
   Content,
   GlobalContainer,
 } from "./components/ContainerGlobal/styles"
-import { MainRoutes, MyRoutes } from "./routes"
+import { MyRoutes } from "./routes"
 import { useEffect, useState } from "react"
 import { useDataStates } from "./contexts"
+import { useLocation } from "react-router-dom"
 
 export function App() {
   const [loading, setLoading] = useState(false)
   const { initialLoading } = useDataStates()
-  const pathname = window?.location?.pathname
+  const { pathname } = useLocation()
 
   async function getStart() {
     if (
@@ -43,12 +44,12 @@ export function App() {
           {loading ? (
             <Load />
           ) : (
-            <MainRoutes>
+            <div>
               <Header />
               <Content>
                 <MyRoutes />
               </Content>
-            </MainRoutes>
+            </div>
           )}
         </GlobalContainer>
       </Container>
